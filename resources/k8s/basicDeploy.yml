@@ -1,7 +1,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: REPLACE_SERVICE_NAME
+  name: helloworld-nodejs
   labels:
     net.beedemo.deploy.type: workshop
 spec:
@@ -11,27 +11,27 @@ spec:
     protocol: TCP
     name: http
   selector:
-    app: REPLACE_SERVICE_NAME
+    app: helloworld-nodejs
 ---
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
-  name: REPLACE_SERVICE_NAME-production
+  name: helloworld-nodejs-production
   labels:
     net.beedemo.deploy.type: workshop
 spec:
   replicas: 1
   template:
     metadata:
-      name: REPLACE_SERVICE_NAME
+      name: helloworld-nodejs
       labels:
         net.beedemo.deploy.type: workshop
-        app: REPLACE_SERVICE_NAME
+        app: helloworld-nodejs
         env: production
     spec:
       containers:
-      - name: REPLACE_SERVICE_NAME
-        image: REPLACE_IMAGE_TAG
+      - name: helloworld-nodejs
+        image: 946759952272.dkr.ecr.us-east-1.amazonaws.com/myjenkinsworld/helloworld-nodejs
         resources:
           requests:
             memory: "100Mi"
@@ -44,7 +44,7 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: REPLACE_SERVICE_NAME
+  name: helloworld-nodejs
   labels:
     net.beedemo.deploy.type: workshop
   annotations:
@@ -54,8 +54,8 @@ spec:
   rules:
   - http:
       paths:
-      - path: /REPLACE_SERVICE_NAME
+      - path: /helloworld-nodejs
         backend:
-          serviceName: REPLACE_SERVICE_NAME
+          serviceName: helloworld-nodejs
           servicePort: 80
     host: prod.workshop.beedemo.net
